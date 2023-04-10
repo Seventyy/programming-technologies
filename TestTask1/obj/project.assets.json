@@ -6788,23 +6788,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jan\\.nuget\\packages\\": {},
+    "C:\\Users\\jjani\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jan\\Documents\\GitHub\\programming-technologies\\TestTask1\\TestTask1.csproj",
+      "projectUniqueName": "C:\\Users\\jjani\\Source\\Repos\\PT\\TestTask1\\TestTask1.csproj",
       "projectName": "TestTask1",
-      "projectPath": "C:\\Users\\Jan\\Documents\\GitHub\\programming-technologies\\TestTask1\\TestTask1.csproj",
-      "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jan\\Documents\\GitHub\\programming-technologies\\TestTask1\\obj\\",
+      "projectPath": "C:\\Users\\jjani\\Source\\Repos\\PT\\TestTask1\\TestTask1.csproj",
+      "packagesPath": "C:\\Users\\jjani\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jjani\\Source\\Repos\\PT\\TestTask1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jjani\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -6813,14 +6813,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Jan\\Documents\\GitHub\\programming-technologies\\Task1\\Task1.csproj": {
-              "projectPath": "C:\\Users\\Jan\\Documents\\GitHub\\programming-technologies\\Task1\\Task1.csproj"
+            "C:\\Users\\jjani\\Source\\Repos\\PT\\Task1\\Task1.csproj": {
+              "projectPath": "C:\\Users\\jjani\\Source\\Repos\\PT\\Task1\\Task1.csproj"
             }
           }
         }
@@ -6868,7 +6869,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
