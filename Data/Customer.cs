@@ -8,9 +8,9 @@ namespace Data
 {
     public class Customer
     {
-        private int id
+        public int id
         {
-            get; set;
+           get;private set;
         }
 
         private List<Item> cart
@@ -18,25 +18,37 @@ namespace Data
             get; set;
         }
 
-        
+        public Customer(int index)
+        {
+                if (index < 0)
+                    throw new ArgumentNullException("value");
+                id = index;
+                cart = new List<Item>();
 
+        }
+        
         public Item GetCartItem(int index)
         {
-
+            if(index < cart.Count)
             return cart[index];
+
+            return null;
+        }
+
+        public void AddCartItem(Item item)
+        {
+            cart.Add(item);
+        }
+
+        public void RemoveCartItem(int index)
+        {
+            if(index < cart.Count)
+            cart.RemoveAt(index);
         }
 
         public (int id, List<Item> list) GetCustomerProperties()
         {
-
             return (this.id, this.cart);
-        }
-
-        public void SetCustomerProperties(int id, List<Item> cart)
-        {
-
-            this.id = id;
-            this.cart = cart;
         }
 
     }

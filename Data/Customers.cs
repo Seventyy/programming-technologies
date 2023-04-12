@@ -9,9 +9,17 @@ namespace Data
     public class Customers : IData<Customer>
     {
         private List<Customer> _customers;
+
+        public Customers()
+        {
+            _customers = new List<Customer>();
+        }
         public Customer Get(int index)
         {
-            return _customers[index];
+            if(index < _customers.Count) 
+                return _customers[index];
+
+            return null;
         }
 
         public List<Customer> GetAll()
@@ -21,6 +29,7 @@ namespace Data
 
         public void Remove(int index)
         {
+            if(index < _customers.Count)
             _customers.RemoveAt(index);
         }
 
@@ -29,17 +38,6 @@ namespace Data
             _customers.Add(instance);
         }
 
-        public (int id, List<Item> list) GetCartItemProperties(int index)
-        {
-
-            return _customers[index].GetCustomerProperties();
-
-        }
-
-        public void SetCartItemProperties(int index, int id, List<Item> cart)
-        {
-            _customers[index].SetCustomerProperties(id, cart);
-        }
 
     }
 }

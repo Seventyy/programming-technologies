@@ -1,23 +1,40 @@
-﻿namespace Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Data
 {
     public class Item
     {
-        private int id { get; set; }
+       
+        public int id { get; private set; }
 
-        private string name { get; set; }
+        public string name { get; private set; }
 
-        private double quantity { get; set; }
+        public double quantity { get; set; }
+  
+
+        public Item(int id, string name, double quantity)
+        {
+            
+                if(id < 0 || quantity < 0 || string.IsNullOrEmpty(name))
+                    throw new ArgumentNullException("value");
+
+                this.id = id;
+                this.name = name;
+                this.quantity = quantity;
+           
+        }
 
         public (int,string,double) GetItemProperties()
         {
             return (this.id,this.name,this.quantity);  
         }
 
-        public void SetItemProperties(int id, string name, double quantity)
+        public void setQuantity(double quantity)
         {
-            this.id = id;
-            this.name = name;
-            this.quantity = quantity;
+            if(quantity >= 0)
+                this.quantity = quantity;
         }
+
+    
     }
 }

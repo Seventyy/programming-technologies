@@ -10,6 +10,11 @@ namespace Data
     {
 
         private List<Item> _items;
+
+        public Catalog() { 
+            _items = new List<Item>();
+        }
+
         public void Add(Item instance)
         {
             _items.Add(instance);
@@ -17,7 +22,10 @@ namespace Data
 
         public Item Get(int index)
         {
+            if(index < _items.Count) 
             return _items[index];
+
+            return null;
         }
 
         public List<Item> GetAll()
@@ -27,17 +35,9 @@ namespace Data
 
         public void Remove(int index)
         {
-            _items.RemoveAt(index);
+            if (index < _items.Count)
+                _items.RemoveAt(index);
         }
 
-        public (int, string, double) GetItemProperties(int index)
-        {
-            return _items[index].GetItemProperties();
-        }
-
-        public void SetItemProperties(int index, int id, string name, double quantity)
-        {
-            _items[index].SetItemProperties(id, name, quantity);
-        }
     }
 }

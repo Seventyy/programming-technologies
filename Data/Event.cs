@@ -6,12 +6,22 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class Event 
+    public class Event 
     {
-        private enum states {passive, active, finished};
-        private states state
+        public enum states {passive, active, finished};
+
+        public states state
         {
             get; set;
+        }
+        public Event()
+        {
+            this.state = states.passive;
+        }
+
+        public void setState(states state)
+        {
+            this.state = state;
         }
 
     }
