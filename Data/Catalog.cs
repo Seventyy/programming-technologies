@@ -11,7 +11,8 @@ namespace Data
 
         private List<Item> _items;
 
-        public Catalog() { 
+        public Catalog()
+        {
             _items = new List<Item>();
         }
 
@@ -22,8 +23,8 @@ namespace Data
 
         public Item Get(int index)
         {
-            if(index < _items.Count) 
-            return _items[index];
+            if (index < _items.Count)
+                return _items[index];
 
             return null;
         }
