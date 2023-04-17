@@ -9,14 +9,16 @@ namespace Data
     public class Event 
     {
         public enum states {passive, active, finished};
+        public Item item;
 
         public states state
         {
             get; set;
         }
-        public Event()
+        public Event(Item item, states state)
         {
-            this.state = states.passive;
+            this.state = state;
+            this.item = item;
         }
 
         public void setState(states state)
