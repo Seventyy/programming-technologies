@@ -11,6 +11,6 @@ namespace Data.abstraction.interfaces
         int ProductId { get; }
         string Name { get; set; }
         double Quantity { get; set; }
-        int Price { get; set; }
+        double Price { get; set; }
     }
 }

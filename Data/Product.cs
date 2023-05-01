@@ -13,9 +13,9 @@ namespace Data
         public int ProductId { get; }
         public string Name { get; set; }
         public double Quantity { get; set; }
-        public int Price { get; set; }
+        public double Price { get; set; }
 
-        public Product(int pid, string n, double q, int p) {  
+        public Product(int pid, string n, double q, double p) {  
             ProductId = pid;
             Name = n;
             Quantity = q;
