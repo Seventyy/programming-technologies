@@ -12,13 +12,11 @@ namespace Data
     {
         public int ProductId { get; }
         public string Name { get; set; }
-        public double Quantity { get; set; }
         public double Price { get; set; }
 
-        public Product(int pid, string n, double q, double p) {  
+        public Product(int pid, string n, double p) {  
             ProductId = pid;
             Name = n;
-            Quantity = q;
             Price = p;  
         }
 

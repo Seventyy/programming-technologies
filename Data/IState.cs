@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Data.abstraction.interfaces
 {
-    public interface IProduct
+    public interface IState
     {
+        int StateId { get; }
+
         int ProductId { get; }
-        string Name { get; set; }
-        double Price { get; set; }
+
+        double ProductQuantity { get; set; }
     }
 }

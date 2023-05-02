@@ -1,12 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Data",
-    "\\DataTest",
-    "\\Logic",
-    "\\LogicTest",
-    "\\TestTask1"
+    ""
   ],
-  "SelectedNode": "\\Data\\Events.cs",
+  "SelectedNode": "\\Task1.sln",
   "PreviewInSolutionExplorer": false
 }

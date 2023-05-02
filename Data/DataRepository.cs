@@ -9,16 +9,18 @@ using Data.abstraction.interfaces;
 
 namespace Data
 {
-    public class DataCollections : DataApi
+    public class DataRepository : DataApi
     {
         public List<ICustomer> Customers;
         public List<IEvent> Events;
         public List<IProduct> Catalog;
+        public List<IState> States;
 
-        public DataCollections() { 
+        public DataRepository() { 
             Customers = new List<ICustomer>();
             Events = new List<IEvent>();
             Catalog = new List<IProduct>();
+            States = new List<IState>();
         }   
 
         public void addCustomer(int cid, string fn, string ln)
@@ -38,9 +40,9 @@ namespace Data
             }
         }
 
-        public void addProduct(int pid, string n, double q, double p)
+        public void addProduct(int pid, string n, double p)
         {
-            Catalog.Add(new  Product(pid, n, q, p));
+            Catalog.Add(new  Product(pid, n, p));
         }
 
         public void deleteCustomer(int id)
@@ -88,10 +90,6 @@ namespace Data
             return Catalog[id].Price;
         }
 
-        public double getProductQuantity(int id)
-        {
-            return Catalog[id].Quantity;
-        }
 
         public void setCustomerFirstName(int id, string name)
         {
@@ -123,10 +121,6 @@ namespace Data
             Catalog[id].Price = price;
         }
 
-        public void setProductQuantity(int id, double quantity)
-        {
-            Catalog[id].Quantity = quantity;
-        }
 
         public int getEventCustomerId(int id)
         {
@@ -146,6 +140,37 @@ namespace Data
         public DateTime getEventDate(int id)
         {
             return Events[id].EventOccurenceTime;
+        }
+
+        public void addState(int id, int pid, double q)
+        {
+            States.Add(new State(id, pid, q));
+        }
+
+        public void deleteState(int id)
+        {
+            States.RemoveAt(id);
+        }
+
+        public int getStateId(int id)
+        {
+            return States[id].StateId;
+        }
+
+        public int getStateProductId(int id)
+        {
+            return States[id].ProductId;
+        }
+
+        public double getStateQuantity(int id)
+        {
+            return States[id].ProductQuantity;
+        }
+
+      
+        public void setStateQuantity(int id, double q)
+        {
+            States[id].ProductQuantity = q;
         }
     }
 }

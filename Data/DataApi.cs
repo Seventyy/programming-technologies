@@ -18,13 +18,11 @@ public interface DataApi
     public void setCustomerLastName(int id, string name);
     public int getCustomerID(int id);
 
-    public void addProduct(int pid, string n, double q, double p);
+    public void addProduct(int pid, string n, double p);
     public void deleteProduct(int id);
     public int getProductID(int id);
     public string getProductName(int id);
     public void setProductName(int id, string name);
-    public double getProductQuantity(int id);
-    public void setProductQuantity(int id, double quantity);
     public double getProductPrice(int id);
     public void setProductPrice(int id, double price);
 
@@ -36,5 +34,14 @@ public interface DataApi
     public DateTime getEventDate(int id);
     public void setEventCustomerId(int id, int cid);
     public void setEventProductId(int id, int pid);
+
+
+    public void addState(int id, int pid, double q);
+    public void deleteState(int id);
+    public int getStateId(int id);
+    public int getStateProductId(int id);
+    public double getStateQuantity(int id);
+    public void setStateQuantity(int id, double q);
+
 
 }
