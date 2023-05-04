@@ -41,7 +41,7 @@ public interface DataApi
     public int getStateId(int id);
     public int getStateProductId(int id);
     public double getStateQuantity(int id);
-    public void setStateQuantity(int id, double q);
+    public void SetStateQuantity(int id, double q);
 
 
 }
