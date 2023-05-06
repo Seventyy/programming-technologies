@@ -168,7 +168,7 @@ namespace Data
         }
 
       
-        public void setStateQuantity(int id, double q)
+        public void SetStateQuantity(int id, double q)
         {
             States[id].ProductQuantity = q;
         }
