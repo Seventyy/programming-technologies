@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    public interface IApplicationLogic
+    public interface LogicApi
     {
-        static IApplicationLogic CreateLogic(DataApi dataApi)
+        static LogicApi CreateLogic(DataApi dataApi)
         {
             return new ApplicationLogic(dataApi);
         }
 
-        void Buy(IProduct product, ICustomer user);
+        void Buy(IProduct product, ICustomer user, double quantity);
 
         void Return(IProduct product, ICustomer user);
 

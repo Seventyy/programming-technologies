@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    internal class ApplicationLogic : IApplicationLogic
+    public class ApplicationLogic : LogicApi
     {
         private DataApi api;
 
@@ -17,18 +17,18 @@ namespace Logic
             this.api = api;
         }
 
-        public void Buy(IProduct product, ICustomer customer)
+        public void Buy(IProduct product, ICustomer customer, double quantity = 1)
         {
-            api.updateState(product.ProductId, api.getStateQuantity(product.ProductId) - 1);
+            api.updateState(product.ProductId, api.getStateQuantity(product.ProductId) - quantity);
 
-            api.addEvent(1, customer.CustomerId, product.ProductId, "b");
+            api.addEvent(0, customer.CustomerId, product.ProductId, "b");
         }
 
         public void Return(IProduct product, ICustomer customer)
         {
             api.updateState(product.ProductId, api.getStateQuantity(product.ProductId) + 1);
 
-            api.addEvent(1, customer.CustomerId, product.ProductId, "r");
+            api.addEvent(0, customer.CustomerId, product.ProductId, "r");
         }
     }
 }
