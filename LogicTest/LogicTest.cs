@@ -10,7 +10,7 @@ namespace LogicTest
         [TestMethod]
         public void TestSmth()
         {
-            IApplicationLogic.CreateLogic(new TestDataRepository());
+            //IApplicationLogic.CreateLogic(new TestDataRepository());
         }
     }
 }

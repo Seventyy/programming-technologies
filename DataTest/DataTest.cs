@@ -6,16 +6,15 @@ namespace DataTest
     {
         [TestMethod]
         public void TestCustomer()
-        {   
-            DataApi api = new Data.DataRepository();
+        {
+            DataApi api = DataApi.createDataRepository();
             api.addCustomer(12, "Andrew", "Andrew");
-            Assert.AreEqual(api.getCustomerFirstName(0), "Andrew");
-            Assert.AreEqual(api.getCustomerLastName(0), "Andrew");
+            Assert.AreEqual(api.getCustomerFirstName(12), "Andrew");
+            Assert.AreEqual(api.getCustomerLastName(12), "Andrew");
             Assert.AreEqual(api.getCustomerID(0), 12);
-            api.setCustomerFirstName(0, "Hammond");
-            api.setCustomerLastName(0, "Hammond");
-            Assert.AreEqual(api.getCustomerFirstName(0), "Hammond");
-            Assert.AreEqual(api.getCustomerLastName(0), "Hammond");
+            api.updateCustomer(0, 12, "Hammond", "Hammond");
+            Assert.AreEqual(api.getCustomerFirstName(12), "Hammond");
+            Assert.AreEqual(api.getCustomerLastName(12), "Hammond");
         }
 
         [TestMethod]
@@ -26,8 +25,7 @@ namespace DataTest
             Assert.AreEqual(api.getProductID(0), 12);
             Assert.AreEqual(api.getProductName(0), "Potato");
             Assert.AreEqual(api.getProductPrice(0), 12.50);
-            api.setProductName(0, "Pepper");
-            api.setProductPrice(0, 1);
+            api.updateProduct(0,"Pepper", 1);
             Assert.AreEqual(api.getProductName(0), "Pepper");
             Assert.AreEqual(api.getProductPrice(0), 1);
         }
@@ -47,9 +45,10 @@ namespace DataTest
         {
             DataApi api = new Data.DataRepository();
             api.addState(0, 0, 5000.50);
+            api.updateState(0, 1000);
             Assert.AreEqual(api.getStateId(0), 0);
             Assert.AreEqual(api.getStateProductId(0), 0);
-            Assert.AreEqual(api.getStateQuantity(0), 5000.50);
+            Assert.AreEqual(api.getStateQuantity(0), 1000);
         }
     }
 }

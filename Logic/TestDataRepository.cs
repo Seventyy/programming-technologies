@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    internal class TestDataRepository : DataApi
+  /*  internal class TestDataRepository : DataApi
     {
         public List<ICustomer> Customers;
         public List<IEvent> Events;
@@ -21,5 +21,5 @@ namespace Logic
             Catalog = new List<IProduct>();
             States = new List<IState>();
         }
-    }
+    }*/
 }

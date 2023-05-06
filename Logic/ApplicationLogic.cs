@@ -19,14 +19,14 @@ namespace Logic
 
         public void Buy(IProduct product, ICustomer customer)
         {
-            api.SetStateQuantity(product.ProductId, api.getStateQuantity(product.ProductId) - 1);
+            api.updateState(product.ProductId, api.getStateQuantity(product.ProductId) - 1);
 
             api.addEvent(1, customer.CustomerId, product.ProductId, "b");
         }
 
         public void Return(IProduct product, ICustomer customer)
         {
-            api.SetStateQuantity(product.ProductId, api.getStateQuantity(product.ProductId) + 1);
+            api.updateState(product.ProductId, api.getStateQuantity(product.ProductId) + 1);
 
             api.addEvent(1, customer.CustomerId, product.ProductId, "r");
         }

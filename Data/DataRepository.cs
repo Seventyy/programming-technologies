@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -62,7 +63,7 @@ namespace Data
 
         public string getCustomerFirstName(int id)
         {
-            return Customers[id].First_Name;
+            return Customers.Find(item => item.CustomerId == id).First_Name;
         }
 
         public int getCustomerID(int id)
@@ -72,7 +73,7 @@ namespace Data
 
         public string getCustomerLastName(int id)
         {
-            return Customers[id].Last_Name;
+            return Customers.Find(item => item.CustomerId==id).Last_Name;
         }
 
         public int getProductID(int id)
@@ -90,38 +91,7 @@ namespace Data
             return Catalog[id].Price;
         }
 
-
-        public void setCustomerFirstName(int id, string name)
-        {
-            Customers[id].First_Name = name;
-        }
-
-        public void setCustomerLastName(int id, string name)
-        {
-            Customers[id].Last_Name = name;
-        }
-
-        public void setEventCustomerId(int id, int cid)
-        {
-            Events[id].CustomerId = cid;
-        }
-
-        public void setEventProductId(int id, int pid)
-        {
-            Events[id].ProductId = pid;
-        }
-
-        public void setProductName(int id, string name)
-        {
-            Catalog[id].Name = name;
-        }
-
-        public void setProductPrice(int id, double price)
-        {
-            Catalog[id].Price = price;
-        }
-
-
+    
         public int getEventCustomerId(int id)
         {
             return Events[id].CustomerId;
@@ -167,10 +137,19 @@ namespace Data
             return States[id].ProductQuantity;
         }
 
-      
-        public void SetStateQuantity(int id, double q)
+        public void updateProduct(int id, string m, double p)
         {
-            States[id].ProductQuantity = q;
+            Catalog[id] = new Product(id ,m, p);
+        }
+
+        public void updateCustomer(int id, int cid, string first_name, string last_name)
+        {
+            Customers[id] = new Customer(cid, first_name, last_name);
+        }
+
+        public void updateState(int id, double quantity)
+        {
+            States[id].ProductQuantity = quantity;
         }
     }
 }
