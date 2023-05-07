@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Shop",
+    "\\Shop\\Logic"
   ],
-  "SelectedNode": "\\Task1.sln",
+  "SelectedNode": "\\Shop\\Task1.sln",
   "PreviewInSolutionExplorer": false
 }
