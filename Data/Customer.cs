@@ -4,51 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Data.abstraction.interfaces;
+
 namespace Data
 {
-    public class Customer
+    internal class Customer : ICustomer
     {
-        public int id
+        public int CustomerId { get; }
+        public string First_Name { get; set; }
+        public string Last_Name { get; set; }
+        public Customer(int cid, string fn, string ln)
         {
-            get; private set;
+            CustomerId = cid;
+            First_Name = fn;
+            Last_Name = ln;
         }
 
-        private List<Item> cart
-        {
-            get; set;
-        }
-
-        public Customer(int index)
-        {
-            if (index < 0)
-                throw new ArgumentNullException("value");
-            id = index;
-            cart = new List<Item>();
-        }
-
-        public Item GetCartItem(int index)
-        {
-            if (index < cart.Count)
-                return cart[index];
-
-            return null;
-        }
-
-        public void AddCartItem(Item item)
-        {
-            cart.Add(item);
-        }
-
-        public void RemoveCartItem(int index)
-        {
-            if (index < cart.Count)
-                cart.RemoveAt(index);
-        }
-
-        public (int id, List<Item> list) GetCustomerProperties()
-        {
-            return (this.id, this.cart);
-        }
-
+    
     }
 }

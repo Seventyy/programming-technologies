@@ -1,219 +1,139 @@
 namespace DataTest
 {
-    using Data;
+    using Data.abstraction.interfaces;
     [TestClass]
     public class DataTest
     {
         [TestMethod]
-        public void TestItem()
-        {
-            Assert.ThrowsException<ArgumentNullException>(() => new Item(-1, "potato", 120));
-            Item item = new Item(1, "Product", 120);
-            Assert.AreEqual(item.GetItemProperties(), (1, "Product", 120));
-            item.setQuantity(100);
-            item.setQuantity(-1);
-            Assert.AreEqual(item.quantity, 100);
-        }
-
-        [TestMethod]
-        public void TestCatalog()
-        {
-            Catalog catalog = new Catalog();
-            Item item = new Item(1, "Product1", 120);
-            Item item1 = new Item(2, "Product2", 12);
-            Item item2 = new Item(3, "Product3", 1200);
-            catalog.Add(item);
-            catalog.Add(item1);
-            catalog.Add(item2);
-            Assert.AreEqual(catalog.GetAll().Count, 3);
-            catalog.Remove(2);
-            Assert.AreEqual(catalog.GetAll().Count, 2);
-            Assert.IsNull(catalog.Get(2));
-        }
-
-        [TestMethod]
         public void TestCustomer()
         {
-            Catalog catalog = new Catalog();
-            Item item = new Item(1, "Product1", 120);
-            Item item1 = new Item(2, "Product2", 12);
-            Item item2 = new Item(3, "Product3", 1200);
-            catalog.Add(item);
-            catalog.Add(item1);
-            catalog.Add(item2);
-            Assert.ThrowsException<ArgumentNullException>(() => new Customer(-1));
-            Customer customer = new Customer(1);
-            customer.AddCartItem(catalog.Get(0));
-            customer.AddCartItem(catalog.Get(1));
-            Assert.AreEqual(customer.GetCartItem(0), item);
-            customer.RemoveCartItem(1);
-            Assert.IsNull(customer.GetCartItem(1));
-
-            Assert.AreEqual(customer.GetCustomerProperties().Item1, 1);
+            DataApi api = DataApi.createDataRepository();
+            api.addCustomer(12, "Andrew", "Andrew");
+            Assert.AreEqual(api.getCustomerFirstName(12), "Andrew");
+            Assert.AreEqual(api.getCustomerLastName(12), "Andrew");
+            Assert.AreEqual(api.getCustomerID(0), 12);
+            api.updateCustomer(0, 12, "Hammond", "Hammond");
+            Assert.AreEqual(api.getCustomerFirstName(12), "Hammond");
+            Assert.AreEqual(api.getCustomerLastName(12), "Hammond");
         }
 
         [TestMethod]
-        public void TestCustomers()
+        public void TestProduct()
         {
-            Customers customers = new Customers();
-            Customer customer = new Customer(1);
-            Customer customer1 = new Customer(2);
-            Customer customer2 = new Customer(3);
-            customers.Add(customer);
-            customers.Add(customer1);
-            customers.Add(customer2);
-            customers.Remove(1);
-            Assert.AreEqual(customers.Get(1), customer2);
-            Assert.AreEqual(customers.GetAll().Count, 2);
+            DataApi api = new Data.DataRepository();
+            api.addProduct(12, "Potato", 12.50);
+            Assert.AreEqual(api.getProductID(0), 12);
+            Assert.AreEqual(api.getProductName(0), "Potato");
+            Assert.AreEqual(api.getProductPrice(0), 12.50);
+            api.updateProduct(0,"Pepper", 1);
+            Assert.AreEqual(api.getProductName(0), "Pepper");
+            Assert.AreEqual(api.getProductPrice(0), 1);
         }
 
         [TestMethod]
         public void TestEvent()
         {
-            Event event1 = new Event(new Item(0, "Product1", 1), Event.states.passive);
-            event1.setState(Event.states.active);
-            Assert.AreEqual(event1.state, Event.states.active);
+            DataApi api = new Data.DataRepository();
+            api.addEvent(0, 231, 321, "b");
+            Assert.AreEqual(api.getEventId(0), 0);
+            Assert.AreEqual(api.getEventCustomerId(0), 231);
+            Assert.AreEqual(api.getEventProductId(0), 321);
         }
 
         [TestMethod]
-        public void TestEvents()
+        public void TestState()
         {
-            Events events = new Events();
-            Event event1 = new Event(new Item(0, "Product1", 1), Event.states.passive);
-            Event event2 = new Event(new Item(0, "Product1", 1), Event.states.passive);
-            Event event3 = new Event(new Item(0, "Product1", 1), Event.states.passive);
-            events.Add(event1);
-            events.Add(event2);
-            events.Add(event3);
-            events.Remove(1);
-            Assert.AreEqual(events.GetAll().Count, 2);
-            Assert.IsNull(events.Get(2));
+            DataApi api = new Data.DataRepository();
+            api.addState(0, 0, 5000.50);
+            api.updateState(0, 1000);
+            Assert.AreEqual(api.getStateId(0), 0);
+            Assert.AreEqual(api.getStateProductId(0), 0);
+            Assert.AreEqual(api.getStateQuantity(0), 1000);
         }
 
-        [TestMethod]
-        public void TestItemRandom()
+
+        private string RandomString()
         {
-            Random rng = new Random();
+            Random rand = new Random();
 
-            int item_id = rng.Next();
-            int item_quantity = rng.Next();
-
-            Assert.ThrowsException<ArgumentNullException>(() => new Item(-1, "potato", 120));
-            Item item = new Item(item_id, "Product", item_quantity);
-            Assert.AreEqual(item.GetItemProperties(), (item_id, "Product", item_quantity));
-            item.setQuantity(item_quantity);
-            item.setQuantity(-1);
-            Assert.AreEqual(item.quantity, item_quantity);
-        }
-
-        [TestMethod]
-        public void TestCatalogRandom()
-        {
-            Random rng = new Random();
-
-            int item_id_1 = rng.Next();
-            int item_id_2 = rng.Next();
-            int item_id_3 = rng.Next();
-            int item_quantity_1 = rng.Next();
-            int item_quantity_2 = rng.Next();
-            int item_quantity_3 = rng.Next();
-
-            Catalog catalog = new Catalog();
-            Item item = new Item(item_id_1, "Product1", item_quantity_1);
-            Item item1 = new Item(item_id_2, "Product2", item_quantity_2);
-            Item item2 = new Item(item_id_3, "Product3", item_quantity_3);
-            catalog.Add(item);
-            catalog.Add(item1);
-            catalog.Add(item2);
-            Assert.AreEqual(catalog.GetAll().Count, 3);
-            catalog.Remove(2);
-            Assert.AreEqual(catalog.GetAll().Count, 2);
-            Assert.IsNull(catalog.Get(2));
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 3)
+                .Select(s => s[rand.Next(s.Length)]).ToArray());
         }
 
         [TestMethod]
         public void TestCustomerRandom()
         {
-            Random rng = new Random();
+            string[] customer_names = new string[] { RandomString(), RandomString() };
+            string[] customer_lastnames = new string[] { RandomString(), RandomString() };
 
-            int item_id_1 = rng.Next();
-            int item_id_2 = rng.Next();
-            int item_id_3 = rng.Next();
-            int item_quantity_1 = rng.Next();
-            int item_quantity_2 = rng.Next();
-            int item_quantity_3 = rng.Next();
-            int customer_id = rng.Next();
+            DataApi api = DataApi.createDataRepository();
 
-            Catalog catalog = new Catalog();
-            Item item = new Item(item_id_1, "Product1", item_quantity_1);
-            Item item1 = new Item(item_id_2, "Product2", item_quantity_2);
-            Item item2 = new Item(item_id_3, "Product3", item_quantity_3);
-            catalog.Add(item);
-            catalog.Add(item1);
-            catalog.Add(item2);
-            Assert.ThrowsException<ArgumentNullException>(() => new Customer(-1));
-            Customer customer = new Customer(customer_id);
-            customer.AddCartItem(catalog.Get(0));
-            customer.AddCartItem(catalog.Get(1));
-            Assert.AreEqual(customer.GetCartItem(0), item);
-            customer.RemoveCartItem(1);
-            Assert.IsNull(customer.GetCartItem(1));
+            api.addCustomer(12, customer_names[0], customer_lastnames[0]);
 
-            Assert.AreEqual(customer.GetCustomerProperties().Item1, customer_id);
+            Assert.AreEqual(api.getCustomerFirstName(12), customer_names[0]);
+            Assert.AreEqual(api.getCustomerLastName(12), customer_lastnames[0]);
+            Assert.AreEqual(api.getCustomerID(0), 12);
+
+            api.updateCustomer(0, 12, customer_names[1], customer_lastnames[1]);
+
+            Assert.AreEqual(api.getCustomerFirstName(12), customer_names[1]);
+            Assert.AreEqual(api.getCustomerLastName(12), customer_lastnames[1]);
         }
 
         [TestMethod]
-        public void TestCustomersRandom()
+        public void TestProductRandom()
         {
-            Random rng = new Random();
+            Random rand = new Random();
 
-            int customer_id_1 = rng.Next();
-            int customer_id_2 = rng.Next();
-            int customer_id_3 = rng.Next();
+            string[] product_names = new string[] { RandomString(), RandomString() };
+            double[] product_prices = new double[] { rand.NextDouble(), rand.NextDouble() };
+            int[] products_ids = new int[] { rand.Next(), rand.Next() };
 
-            Customers customers = new Customers();
-            Customer customer = new Customer(customer_id_1);
-            Customer customer1 = new Customer(customer_id_2);
-            Customer customer2 = new Customer(customer_id_3);
-            customers.Add(customer);
-            customers.Add(customer1);
-            customers.Add(customer2);
-            customers.Remove(1);
-            Assert.AreEqual(customers.Get(1), customer2);
-            Assert.AreEqual(customers.GetAll().Count, 2);
+            DataApi api = new Data.DataRepository();
+
+            api.addProduct(products_ids[0], product_names[0], product_prices[0]);
+
+            Assert.AreEqual(api.getProductID(0), products_ids[0]);
+            Assert.AreEqual(api.getProductName(0), product_names[0]);
+            Assert.AreEqual(api.getProductPrice(0), product_prices[0]);
+
+            api.updateProduct(0, product_names[1], product_prices[1]);
+
+            Assert.AreEqual(api.getProductName(0), product_names[1]);
+            Assert.AreEqual(api.getProductPrice(0), product_prices[1]);
         }
 
         [TestMethod]
         public void TestEventRandom()
         {
-            Random rng = new Random();
+            Random rand = new Random();
 
-            int item_id_1 = rng.Next();
-            int item_quantity_1 = rng.Next();
+            int customer_id = rand.Next();
+            int product_id = rand.Next();
 
-            Event event1 = new Event(new Item(item_id_1, "Product1", item_quantity_1), Event.states.passive);
-            event1.setState(Event.states.active);
-            Assert.AreEqual(event1.state, Event.states.active);
+            DataApi api = new Data.DataRepository();
+            api.addEvent(0, customer_id, product_id, "b");
+            Assert.AreEqual(api.getEventId(0), 0);
+            Assert.AreEqual(api.getEventCustomerId(0), customer_id);
+            Assert.AreEqual(api.getEventProductId(0), product_id);
         }
 
         [TestMethod]
-        public void TestEventsRandom()
+        public void TestStateRandom()
         {
-            Random rng = new Random();
+            Random rand = new Random();
 
-            int item_id = rng.Next();
-            int item_quantity = rng.Next();
+            double[] state_quantities = new double[] { rand.NextDouble(), rand.NextDouble() };
 
-            Events events = new Events();
-            Event event1 = new Event(new Item(item_id, "Product1", item_quantity), Event.states.passive);
-            Event event2 = new Event(new Item(item_id, "Product1", item_quantity), Event.states.passive);
-            Event event3 = new Event(new Item(item_id, "Product1", item_quantity), Event.states.passive);
-            events.Add(event1);
-            events.Add(event2);
-            events.Add(event3);
-            events.Remove(1);
-            Assert.AreEqual(events.GetAll().Count, 2);
-            Assert.IsNull(events.Get(2));
+            DataApi api = new Data.DataRepository();
+
+            api.addState(0, 0, state_quantities[0]);
+            api.updateState(0, state_quantities[1]);
+
+            Assert.AreEqual(api.getStateId(0), 0);
+            Assert.AreEqual(api.getStateProductId(0), 0);
+            Assert.AreEqual(api.getStateQuantity(0), state_quantities[1]);
         }
     }
 }
