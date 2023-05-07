@@ -1,4 +1,5 @@
 using Data;
+using Data.abstraction.interfaces;
 using Logic;
 
 namespace LogicTest
@@ -7,82 +8,135 @@ namespace LogicTest
     public class LogicTest
     {
         [TestMethod]
-        public void TestSingleItemBuy()
+        public void TestSimple()
         {
-            Customers customers = new Customers();
-            customers.Add(new Customer(0));
+            DataRepository dataRepository = new DataRepository();
+            ApplicationLogic applicationLogic = new ApplicationLogic(dataRepository);
 
-            Catalog catalog = new Catalog();
-            catalog.Add(new Item(0, "Product 0", 1));
+            Product product0 = new Product(0, "P1", 1);
+            dataRepository.addProduct(0, "P1", 1);
+            dataRepository.addState(0, 0, 1);
 
-            CatalogManager catalogManager = new CatalogManager(catalog);
-            CustomerManager customerManager = new CustomerManager(customers, catalogManager);
+            Customer customer0 = new Customer(0, "C1", "C1");
+            dataRepository.addCustomer(0, "C1", "C1");
 
-            customers.Get(0).AddCartItem(new Item(0, "Product 0", 1));
+            applicationLogic.Buy(product0, customer0);
 
-            customerManager.BuyCart(customers.Get(0));
-
-            Assert.AreEqual(catalog.Get(0).quantity, 0);
+            Assert.AreEqual(dataRepository.getStateQuantity(0), 0);
+            Assert.AreEqual(dataRepository.getEventProductId(0), 0);
         }
 
         [TestMethod]
-        public void TestMultiItemBuy()
+        public void TestMultiple()
         {
-            Customers customers = new Customers();
-            customers.Add(new Customer(0));
-            customers.Add(new Customer(1));
-            customers.Add(new Customer(2));
+            DataRepository dataRepository = new DataRepository();
+            ApplicationLogic applicationLogic = new ApplicationLogic(dataRepository);
 
-            Catalog catalog = new Catalog();
-            catalog.Add(new Item(0, "Product 0", 42));
-            catalog.Add(new Item(1, "Product 1", 69));
-            catalog.Add(new Item(2, "Product 2", 420));
-            catalog.Add(new Item(3, "Product 3", 88));
+            Product product0 = new Product(0, "P0", 1);
+            Product product1 = new Product(1, "P1", 2);
+            Product product2 = new Product(2, "P2", 3);
+            Product product3 = new Product(3, "P3", 10);
 
-            CatalogManager catalogManager = new CatalogManager(catalog);
-            CustomerManager customerManager = new CustomerManager(customers, catalogManager);
+            dataRepository.addProduct(0, "P0", 1);
+            dataRepository.addProduct(1, "P1", 2);
+            dataRepository.addProduct(2, "P2", 3);
+            dataRepository.addProduct(3, "P3", 10);
 
-            customers.Get(0).AddCartItem(new Item(0, "Product 0", 20));
-            customers.Get(0).AddCartItem(new Item(2, "Product 2", 20));
-            customers.Get(0).AddCartItem(new Item(3, "Product 3", 88));
-            customers.Get(0).AddCartItem(new Item(1, "Product 1", 96));
-            customers.Get(0).AddCartItem(new Item(0, "Product 0", 20));
+            dataRepository.addState(0, 0, 10);
+            dataRepository.addState(1, 1, 20);
+            dataRepository.addState(2, 2, 32);
+            dataRepository.addState(3, 3, 450);
 
-            customerManager.BuyCart(customers.Get(0));
+            Customer customer0 = new Customer(0, "CF0", "CL0");
+            Customer customer1 = new Customer(1, "CF1", "CL1");
+            Customer customer2 = new Customer(2, "CF2", "CL2");
+            Customer customer3 = new Customer(3, "CF3", "CL3");
 
-            Assert.AreEqual(catalog.Get(0).quantity, 2);
-            Assert.AreEqual(catalog.Get(1).quantity, 69);
-            Assert.AreEqual(catalog.Get(2).quantity, 400);
-            Assert.AreEqual(catalog.Get(3).quantity, 0);
+            dataRepository.addCustomer(0, "CF0", "CL0");
+            dataRepository.addCustomer(1, "CF1", "CL1");
+            dataRepository.addCustomer(2, "CF2", "CL2");
+            dataRepository.addCustomer(3, "CF3", "CL3");
+
+            applicationLogic.Buy(product0, customer0);
+            applicationLogic.Buy(product1, customer1, 14);
+            applicationLogic.Buy(product2, customer2, 32);
+            applicationLogic.Buy(product3, customer3, 420);
+
+            Assert.AreEqual(dataRepository.getStateQuantity(0), 9);
+            Assert.AreEqual(dataRepository.getStateQuantity(1), 6);
+            Assert.AreEqual(dataRepository.getStateQuantity(2), 0);
+            Assert.AreEqual(dataRepository.getStateQuantity(3), 30);
+
+            Assert.AreEqual(dataRepository.getEventProductId(0), 0);
+            Assert.AreEqual(dataRepository.getEventProductId(1), 1);
+            Assert.AreEqual(dataRepository.getEventProductId(2), 2);
+            Assert.AreEqual(dataRepository.getEventProductId(3), 3);
+        }
+
+        private string RandomString()
+        {
+            Random rand = new Random();
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 3)
+                .Select(s => s[rand.Next(s.Length)]).ToArray());
         }
 
         [TestMethod]
-        public void TestRandomItemBuy()
+        public void TestRandom()
         {
-            Random rng = new Random();
+            Random rand = new Random();
 
-            int customer_id = rng.Next();
-            int item_id = rng.Next();
-            int item_catalog_quantity = rng.Next();
-            int item_bought_quantity = rng.Next();
+            string[] product_names = new string[] { RandomString(), RandomString(), RandomString(), RandomString() };
+            string[] customer_names = new string[] { RandomString(), RandomString(), RandomString(), RandomString() };
+            string[] customer_lastnames = new string[] { RandomString(), RandomString(), RandomString(), RandomString() };
 
-            Customers customers = new Customers();
-            customers.Add(new Customer(customer_id));
+            double[] product_prices = new double[] { rand.NextDouble(), rand.NextDouble(), rand.NextDouble(), rand.NextDouble() };
+            double[] state_quantities = new double[] { rand.NextDouble(), rand.NextDouble(), rand.NextDouble(), rand.NextDouble() };
+            double[] buy_ammount = new double[] { rand.NextDouble(), rand.NextDouble(), rand.NextDouble(), rand.NextDouble() };
 
-            Catalog catalog = new Catalog();
-            catalog.Add(new Item(item_id, "Product 0", item_catalog_quantity));
+            DataRepository dataRepository = new DataRepository();
+            ApplicationLogic applicationLogic = new ApplicationLogic(dataRepository);
 
-            CatalogManager catalogManager = new CatalogManager(catalog);
-            CustomerManager customerManager = new CustomerManager(customers, catalogManager);
+            Product product0 = new Product(0, product_names[0], product_prices[0]);
+            Product product1 = new Product(1, product_names[1], product_prices[1]);
+            Product product2 = new Product(2, product_names[2], product_prices[2]);
+            Product product3 = new Product(3, product_names[3], product_prices[3]);
 
-            customers.Get(0).AddCartItem(new Item(item_id, "Product 0", item_bought_quantity));
+            dataRepository.addProduct(0, product_names[0], product_prices[0]);
+            dataRepository.addProduct(1, product_names[1], product_prices[1]);
+            dataRepository.addProduct(2, product_names[2], product_prices[2]);
+            dataRepository.addProduct(3, product_names[3], product_prices[3]);
 
-            customerManager.BuyCart(customers.Get(0));
+            dataRepository.addState(0, 0, state_quantities[0]);
+            dataRepository.addState(1, 1, state_quantities[1]);
+            dataRepository.addState(2, 2, state_quantities[2]);
+            dataRepository.addState(3, 3, state_quantities[3]);
 
-            if (item_catalog_quantity >= item_bought_quantity)
-                Assert.AreEqual(catalog.Get(0).quantity, item_catalog_quantity - item_bought_quantity);
-            else
-                Assert.AreEqual(catalog.Get(0).quantity, item_catalog_quantity);
+            Customer customer0 = new Customer(0, customer_names[0], customer_lastnames[0]);
+            Customer customer1 = new Customer(1, customer_names[1], customer_lastnames[1]);
+            Customer customer2 = new Customer(2, customer_names[2], customer_lastnames[2]);
+            Customer customer3 = new Customer(3, customer_names[3], customer_lastnames[3]);
+
+            dataRepository.addCustomer(0, customer_names[0], customer_lastnames[0]);
+            dataRepository.addCustomer(1, customer_names[1], customer_lastnames[1]);
+            dataRepository.addCustomer(2, customer_names[2], customer_lastnames[2]);
+            dataRepository.addCustomer(3, customer_names[3], customer_lastnames[3]);
+
+            applicationLogic.Buy(product0, customer0, buy_ammount[0]);
+            applicationLogic.Buy(product1, customer1, buy_ammount[1]);
+            applicationLogic.Buy(product2, customer2, buy_ammount[2]);
+            applicationLogic.Buy(product3, customer3, buy_ammount[3]);
+
+            Assert.AreEqual(dataRepository.getStateQuantity(0), state_quantities[0] - buy_ammount[0]);
+            Assert.AreEqual(dataRepository.getStateQuantity(1), state_quantities[1] - buy_ammount[1]);
+            Assert.AreEqual(dataRepository.getStateQuantity(2), state_quantities[2] - buy_ammount[2]);
+            Assert.AreEqual(dataRepository.getStateQuantity(3), state_quantities[3] - buy_ammount[3]);
+
+            Assert.AreEqual(dataRepository.getEventProductId(0), 0);
+            Assert.AreEqual(dataRepository.getEventProductId(1), 1);
+            Assert.AreEqual(dataRepository.getEventProductId(2), 2);
+            Assert.AreEqual(dataRepository.getEventProductId(3), 3);
         }
     }
 }
