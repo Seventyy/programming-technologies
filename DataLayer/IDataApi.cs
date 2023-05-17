@@ -49,5 +49,8 @@ public interface IDataApi
     public DateTime getEventDate(int id);
     #endregion
 
+    public List<ICustomer> getCustomers();
+    public List<IProduct> getProducts();
+    public List<IEvent> getEvents();
 
 }

@@ -10,10 +10,10 @@ namespace Data
 {
     public class DataRepository : IDataApi
     {
-        public List<ICustomer> Customers;
-        public List<IEvent> Events;
-        public List<IProduct> Catalog;
-   
+        public List<ICustomer> Customers { get; set; }
+        public List<IEvent> Events { get; set; }
+        public List<IProduct> Catalog { get; set; }
+
         public DataRepository()
         {
             Customers = new List<ICustomer>();
@@ -123,6 +123,21 @@ namespace Data
         public double getProductState(int id)
         {
             return Catalog[id].State;
+        }
+
+        public List<ICustomer> getCustomers()
+        {
+            return Customers;
+        }
+
+        public List<IProduct> getProducts()
+        {
+            return Catalog;
+        }
+
+        public List<IEvent> getEvents()
+        {
+            return Events;
         }
     }
 }

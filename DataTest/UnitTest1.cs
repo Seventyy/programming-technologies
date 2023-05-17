@@ -6,7 +6,8 @@ namespace DataTest
     public class UnitTest1
     {
 
-        private String connection = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\jjani\\source\\repos\\Task2\\DataTest\\Database1.mdf;Integrated Security=True";
+        private string connection = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\jjani\\source\\repos\\Task2\\DataTest\\Database1.mdf;Integrated Security=True";
+       
         MapperConfiguration configuration = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<DataTestClasses.Customer, Customer>();
