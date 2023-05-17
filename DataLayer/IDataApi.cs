@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Data;
 
 namespace Data.abstraction.interfaces;
 
-public interface DataApi
+public interface IDataApi
 {
 
-   /* static DataApi createDataRepository()
+    static IDataApi createDataRepository()
     {
-        return new DataRepository();
-    }*/
+        return new Data.DataRepository();
+    }
 
 
     #region Customer
