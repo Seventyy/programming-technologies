@@ -1,23 +1,22 @@
-﻿using DataLayer;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Data.abstraction.interfaces;
 
 namespace Data
 {
-    public class Customer
-    {
-        DataClasses1DataContext db;
-
-        public Customer() {
-            db = new DataClasses1DataContext(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\jjani\source\repos\Task2\DataLayer\Database1.mdf;Integrated Security=True");
+        internal class Customer : ICustomer {
+        public int CustomerId { get; }
+        public string First_Name { get; set; }
+        public string Last_Name { get; set; }
+        public Customer(int cid, string fn, string ln)
+        {
+            CustomerId = cid;
+            First_Name = fn;
+            Last_Name = ln;
         }
-        public void addCustomer()
-        { 
-            db.Customers.InsertOnSubmit(new DataLayer.Customer { Id = 1, first_name = "Jakub", last_name = "Janicki" });
-            db.SubmitChanges();
-        }
-
-        public DataLayer.Customer getCustomer(int id) {
-            return db.Customers.FirstOrDefault(e => e.Id.Equals(id));
-        }
-
     }
 }
