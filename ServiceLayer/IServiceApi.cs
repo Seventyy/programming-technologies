@@ -4,7 +4,7 @@ namespace Service
 {
     public interface IServiceApi
     {
-        
+
         public void addCustomer(int customer_id, string first_name, string last_name);
         public void deleteCustomer(int id);
         public void updateCustomer(int id, int customer_id, string first_name, string last_name);

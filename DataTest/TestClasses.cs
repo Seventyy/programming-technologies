@@ -37,7 +37,7 @@ namespace DataTestClasses
 
     }
 
-    internal class Event 
+    public class Event 
     {
         public int EventId { get; }
         public int CustomerId { get; set; }

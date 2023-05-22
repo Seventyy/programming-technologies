@@ -1,3 +1,5 @@
+using Service;
+
 namespace ServiceTests
 {
     [TestClass]
@@ -6,6 +8,36 @@ namespace ServiceTests
         [TestMethod]
         public void TestMethod1()
         {
+            IServiceApi api = new DataService();
+            api.addCustomer(1, "john", "John");
+            Assert.AreEqual(api.getCustomers()[0].First_Name, "john");
+            api.addCustomer(2, "john", "John");
+            api.addCustomer(3, "john", "John");
+            api.addCustomer(4, "john", "John");
+            api.deleteCustomer(3);
+            Assert.AreEqual(api.getCustomers().Count(), 3);
         }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            IServiceApi api = new DataService();
+            api.addProduct(1, "Potato", 12, 300);
+            api.addProduct(2, "Tomato", 12, 32);
+            api.addProduct(3, "Cucumber", 12, 3300);
+            api.addProduct(4, "Milk", 12, 510);
+            Assert.AreEqual(api.getProductPrice(1) + api.getProductPrice(2), 24);
+
+        }
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            IServiceApi api = new DataService();
+            api.addEvent(1, 1, 1, "b");
+            api.addEvent(2, 1, 1, "s");
+            Assert.AreEqual(api.getEvents().Count(), 1);
+        }
+      
     }
 }

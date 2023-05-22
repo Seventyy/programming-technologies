@@ -3,7 +3,7 @@ namespace DataTest
     using AutoMapper;
 
     [TestClass]
-    public class UnitTest1
+    public class Datatest
     {
 
         private string connection = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\jjani\\source\\repos\\Task2\\DataTest\\Database1.mdf;Integrated Security=True";
@@ -17,7 +17,7 @@ namespace DataTest
 
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestdbCustomer()
         {
             var mapper = configuration.CreateMapper();
 
@@ -31,7 +31,7 @@ namespace DataTest
         }
 
         [TestMethod]
-        public void TestMethod2()
+        public void TestdbProduct()
         {
             var mapper = configuration.CreateMapper();
 
@@ -42,6 +42,22 @@ namespace DataTest
                               select prod).Single();
 
                 Assert.AreEqual(product.Name, "Potato");
+            }
+        }
+
+        [TestMethod]
+        public void TestdbEvent()
+        {
+            var mapper = configuration.CreateMapper();
+
+            using (DataClasses1DataContext db = new DataClasses1DataContext(connection))
+            {
+                Event e = (from eve in db.Events
+                                   where eve.ProductId == 1
+                                   select eve).Single();
+
+                Assert.AreEqual(e.CustomerId, 1 );
+
             }
         }
     }

@@ -11,7 +11,7 @@ namespace Service
     public class DataService : IServiceApi
     {
         IDataApi _context { get; set; }
-        DataService()
+        public DataService()
         {
             _context = new DataRepository();
         }
