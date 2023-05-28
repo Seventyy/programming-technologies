@@ -58,21 +58,13 @@ namespace Service
             return _context.getCustomerFirstName(id);
         }
 
-        public int getCustomerID(int id)
-        {
-            return _context.getCustomerID(id);
-        }
-
+      
         public string getCustomerLastName(int id)
         {
             return _context.getCustomerLastName(id);
         }
 
-        public int getProductID(int id)
-        {
-            return _context.getProductID(id);
-        }
-
+    
         public string getProductName(int id)
         {
             return _context.getProductName(id);
@@ -92,11 +84,6 @@ namespace Service
         public int getEventProductId(int id)
         {
             return _context.getEventProductId(id);
-        }
-
-        public int getEventId(int id)
-        {
-            return _context.getEventId(id);
         }
 
         public DateTime getEventDate(int id)

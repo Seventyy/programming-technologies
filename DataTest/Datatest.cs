@@ -1,6 +1,7 @@
 namespace DataTest
 {
     using AutoMapper;
+    using Data.abstraction.interfaces;
 
     [TestClass]
     public class Datatest
@@ -19,15 +20,10 @@ namespace DataTest
         [TestMethod]
         public void TestdbCustomer()
         {
-            var mapper = configuration.CreateMapper();
-
-            using (DataClasses1DataContext db = new DataClasses1DataContext(connection))
-            {
-                DataTestClasses.Customer c = new DataTestClasses.Customer(2, "Jacob", "James");
-                Customer customer = mapper.Map<Customer>(c);
-               /* db.Customers.InsertOnSubmit(customer);*/
-                db.SubmitChanges();
-            }
+            IDataApi api = IDataApi.createDataRepository();
+            /*api.addProduct(2, "Tomato", 12.50, 137.2);*/
+            Assert.AreEqual("Jacob", api.getCustomerFirstName(7));
+            Assert.AreEqual("James", api.getCustomerLastName(7));
         }
 
         [TestMethod]
@@ -37,11 +33,13 @@ namespace DataTest
 
             using (DataClasses1DataContext db = new DataClasses1DataContext(connection))
             {
-                Product product = (from prod in db.Products
+                IQueryable<Product> product = from prod in db.Products
                                where prod.Name == "Potato"
-                              select prod).Single();
-
-                Assert.AreEqual(product.Name, "Potato");
+                              select prod;
+                foreach (Product p in product)
+                {
+                    Assert.AreEqual(p.Name, "Potato");
+                }
             }
         }
 

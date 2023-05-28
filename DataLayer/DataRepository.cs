@@ -1,29 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+using AutoMapper;
 using Data.abstraction.interfaces;
+
 
 namespace Data
 {
     public class DataRepository : IDataApi
     {
+
+        private string connection = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\jjani\\source\\repos\\Task2\\DataTest\\Database1.mdf;Integrated Security=True";
+
+        MapperConfiguration configuration = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Customer, DataLayer.Customer>();
+            cfg.CreateMap<Product, DataLayer.Product>();
+            cfg.CreateMap<IEvent, DataLayer.Event>();
+        });
+
+
         public List<ICustomer> Customers { get; set; }
         public List<IEvent> Events { get; set; }
         public List<IProduct> Catalog { get; set; }
+
+        IMapper mapper;
+    
 
         public DataRepository()
         {
             Customers = new List<ICustomer>();
             Events = new List<IEvent>();
             Catalog = new List<IProduct>();
+            mapper = configuration.CreateMapper();
+     
         }
 
         public void addCustomer(int cid, string fn, string ln)
         {
-            Customers.Add(new Customer(cid, fn, ln));
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                Customer c = new Customer(cid, fn, ln);
+                DataLayer.Customer customer = mapper.Map<DataLayer.Customer>(c);
+                Customers.Add(c);
+                db.Customers.InsertOnSubmit(customer);
+                db.SubmitChanges();
+            }
         }
 
         public void addEvent(int eid, int cid, int pid, string mode)
@@ -40,17 +67,44 @@ namespace Data
 
         public void addProduct(int pid, string n, double p, double s)
         {
-            Catalog.Add(new Product(pid, n, p, s));
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                Product prod = new Product(pid, n, p, s);
+                DataLayer.Product product = mapper.Map<DataLayer.Product>(prod);
+                Catalog.Add(prod);
+                db.Products.InsertOnSubmit(product);
+                db.SubmitChanges();
+            }
         }
 
         public void deleteCustomer(int id)
         {
-            Customers.RemoveAt(id);
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Customer> customers = from cus in db.Customers
+                                                    where cus.Id == id
+                                                    select cus;
+
+                foreach (DataLayer.Customer customer in customers)
+                {
+                    db.Customers.DeleteOnSubmit(customer);
+                }
+            }
         }
 
         public void deleteProduct(int id)
         {
-            Catalog.RemoveAt(id);
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Product> products = from prod in db.Products
+                                                         where prod.Id == id
+                                                           select prod ;
+
+                foreach(DataLayer.Product prod in products)
+                {
+                    db.Products.DeleteOnSubmit(prod);
+                }
+            }
         }
 
         public void deleteEvent(int id)
@@ -60,17 +114,35 @@ namespace Data
 
         public string getCustomerFirstName(int id)
         {
-            return Customers.Find(item => item.CustomerId == id).First_Name;
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Customer> customers = from cus in db.Customers
+                                                           where cus.Id == id
+                                                           select cus;
+
+                foreach (DataLayer.Customer customer in customers)
+                {
+                    return customer.first_name;
+                }
+            }
+            return null;
         }
 
-        public int getCustomerID(int id)
-        {
-            return Customers[id].CustomerId;
-        }
 
         public string getCustomerLastName(int id)
         {
-            return Customers.Find(item => item.CustomerId == id).Last_Name;
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Customer> customers = from cus in db.Customers
+                                                           where cus.Id == id
+                                                           select cus;
+
+                foreach (DataLayer.Customer customer in customers)
+                {
+                    return customer.last_name;
+                }
+            }
+            return null;
         }
 
         public int getProductID(int id)
