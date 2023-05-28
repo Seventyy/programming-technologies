@@ -55,13 +55,25 @@ namespace Data
 
         public void addEvent(int eid, int cid, int pid, string mode)
         {
-            if (mode == "b")
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
             {
-                Events.Add(new BuyEvent(eid, cid, pid));
-            }
-            if (mode == "r")
-            {
-                Events.Add(new ReturnEvent(eid, cid, pid));
+               
+                if (mode == "b")
+                {
+                    IEvent e = new BuyEvent(eid, cid, pid, "Buy");
+                    Events.Add(e);
+                    DataLayer.Event eve = mapper.Map<DataLayer.Event>(e);
+                    db.Events.InsertOnSubmit(eve);
+
+                }
+                if (mode == "r")
+                {
+                    IEvent e = new ReturnEvent(eid, cid, pid, "Return");
+                    Events.Add(e);
+                    DataLayer.Event eve = mapper.Map<DataLayer.Event>(e);
+                    db.Events.InsertOnSubmit(eve);
+                }
+                db.SubmitChanges();
             }
         }
 
@@ -89,6 +101,7 @@ namespace Data
                 {
                     db.Customers.DeleteOnSubmit(customer);
                 }
+                db.SubmitChanges();
             }
         }
 
@@ -104,15 +117,27 @@ namespace Data
                 {
                     db.Products.DeleteOnSubmit(prod);
                 }
+                db.SubmitChanges ();
             }
         }
 
         public void deleteEvent(int id)
         {
-            Events.RemoveAt(id);
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Event> events = from eve in db.Events
+                                                         where eve.Id == id
+                                                         select eve;
+
+                foreach (DataLayer.Event eve in events)
+                {
+                    db.Events.DeleteOnSubmit(eve);
+                }
+                db.SubmitChanges();
+            }
         }
 
-        public string getCustomerFirstName(int id)
+        public string? getCustomerFirstName(int id)
         {
             using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
             {
@@ -129,7 +154,7 @@ namespace Data
         }
 
 
-        public string getCustomerLastName(int id)
+        public string? getCustomerLastName(int id)
         {
             using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
             {
@@ -145,56 +170,140 @@ namespace Data
             return null;
         }
 
-        public int getProductID(int id)
+       
+        public string? getProductName(int id)
         {
-            return Catalog[id].ProductId;
-        }
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Product> products = from prod in db.Products
+                                                         where prod.Id == id
+                                                         select prod;
 
-        public string getProductName(int id)
-        {
-            return Catalog[id].Name;
+                foreach (DataLayer.Product prod in products)
+                {
+                    return prod.Name;
+                }
+            }
+            return null;
         }
 
         public double getProductPrice(int id)
         {
-            return Catalog[id].Price;
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Product> products = from prod in db.Products
+                                                         where prod.Id == id
+                                                         select prod;
+
+                foreach (DataLayer.Product prod in products)
+                {
+                    return prod.Price;
+                }
+            }
+            return 0;
         }
 
 
         public int getEventCustomerId(int id)
         {
-            return Events[id].CustomerId;
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Event> events = from eve in db.Events
+                                                     where eve.Id == id
+                                                     select eve;
+
+                foreach (DataLayer.Event eve in events)
+                {
+                    return eve.CustomerId;
+                }
+            }
+            return 0;
         }
 
         public int getEventProductId(int id)
         {
-            return Events[id].ProductId;
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Event> events = from eve in db.Events
+                                                     where eve.Id == id
+                                                     select eve;
+
+                foreach (DataLayer.Event eve in events)
+                {
+                    return eve.ProductId;
+                }
+            }
+            return 0;
         }
 
-        public int getEventId(int id)
+      
+        public DateTime? getEventDate(int id)
         {
-            return Events[id].EventId;
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Event> events = from eve in db.Events
+                                                     where eve.Id == id
+                                                     select eve;
+
+                foreach (DataLayer.Event eve in events)
+                {
+                    return eve.EventOccurenceTime;
+                }
+            }
+            return null;
         }
 
-        public DateTime getEventDate(int id)
-        {
-            return Events[id].EventOccurenceTime;
-        }
 
-
-        public void updateProduct(int id, string m, double p, double s)
+        public void updateProduct(int id, string n, double p, double s)
         {
-            Catalog[id] = new Product(id, m, p, s);
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Product> products = from prod in db.Products
+                                                         where prod.Id == id
+                                                         select prod;
+
+                foreach (DataLayer.Product prod in products)
+                {
+                   prod.Price = p;
+                   prod.Name = n;
+                   prod.State = s;
+                }
+                db.SubmitChanges();
+            }
+        
         }
 
         public void updateCustomer(int id, int cid, string first_name, string last_name)
         {
-            Customers[id] = new Customer(cid, first_name, last_name);
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Customer> customers = from cus in db.Customers
+                                                           where cus.Id == id
+                                                           select cus;
+
+                foreach (DataLayer.Customer customer in customers)
+                {
+                    customer.first_name = first_name;
+                    customer.last_name = last_name;
+                }
+                db.SubmitChanges();
+            }
         }
 
         public double getProductState(int id)
         {
-            return Catalog[id].State;
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Product> products = from prod in db.Products
+                                                         where prod.Id == id
+                                                         select prod;
+
+                foreach (DataLayer.Product prod in products)
+                {
+                    return prod.State;
+                }
+            }
+            return 0;
         }
 
         public List<ICustomer> getCustomers()

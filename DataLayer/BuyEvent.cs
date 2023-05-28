@@ -16,11 +16,14 @@ namespace Data
 
         public DateTime EventOccurenceTime { get; }
 
-        public BuyEvent(int eid, int cid, int pid)
+        public String EventType { get; set; }
+
+        public BuyEvent(int eid, int cid, int pid, String t)
         {
             EventId = eid;
             CustomerId = cid;
             ProductId = pid;
+            EventType = t;
             EventOccurenceTime = DateTime.Now;
         }
     }

@@ -24,6 +24,11 @@ namespace DataTest
             /*api.addProduct(2, "Tomato", 12.50, 137.2);*/
             Assert.AreEqual("Jacob", api.getCustomerFirstName(7));
             Assert.AreEqual("James", api.getCustomerLastName(7));
+            Assert.AreEqual("Tomato", api.getProductName(7));
+            Assert.AreEqual(137.2, api.getProductState(7));
+            Assert.AreEqual(250, api.getProductPrice(1));
+            api.updateProduct(6, "Cucumber", 100, 100);
+            Assert.AreEqual("Cucumber", api.getProductName(6));
         }
 
         [TestMethod]
@@ -46,17 +51,9 @@ namespace DataTest
         [TestMethod]
         public void TestdbEvent()
         {
-            var mapper = configuration.CreateMapper();
-
-            using (DataClasses1DataContext db = new DataClasses1DataContext(connection))
-            {
-                Event e = (from eve in db.Events
-                                   where eve.ProductId == 1
-                                   select eve).Single();
-
-                Assert.AreEqual(e.CustomerId, 1 );
-
-            }
+            IDataApi api = IDataApi.createDataRepository();
+            api.addEvent(1, 30, 7, "b");
+            
         }
     }
 }

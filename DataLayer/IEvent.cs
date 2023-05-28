@@ -13,5 +13,7 @@ namespace Data.abstraction.interfaces
         int ProductId { get; set; }
         DateTime EventOccurenceTime { get; }
 
+        String EventType { get; set; }
+
     }
 }
