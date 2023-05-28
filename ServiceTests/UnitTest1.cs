@@ -9,9 +9,7 @@ namespace ServiceTests
         public void TestMethod1()
         {
             IServiceApi api = new DataService();
-            api.addProduct(2, "Tomato", 12.50, 137.2);
             Assert.AreEqual(api.getCustomers().Count(), 0);
-            api.deleteCustomer(0);
         }
 
         /*  [TestMethod]

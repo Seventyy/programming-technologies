@@ -43,7 +43,7 @@ public interface IDataApi
     public void deleteEvent(int id);
     public int getEventCustomerId(int id);
     public int getEventProductId(int id);
-    public DateTime getEventDate(int id);
+    public DateTime? getEventDate(int id);
     #endregion
 
     public List<ICustomer> getCustomers();

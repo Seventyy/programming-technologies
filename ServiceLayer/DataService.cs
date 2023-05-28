@@ -88,7 +88,7 @@ namespace Service
 
         public DateTime getEventDate(int id)
         {
-            return _context.getEventDate(id);
+            return (DateTime)_context.getEventDate(id);
         }
 
 

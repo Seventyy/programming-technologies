@@ -310,7 +310,7 @@ namespace Data
         {
             return Customers;
         }
-
+        
         public List<IProduct> getProducts()
         {
             return Catalog;
