@@ -4,8 +4,9 @@
     "\\PresentationLayer",
     "\\PresentationLayer\\Model",
     "\\PresentationLayer\\View",
-    "\\PresentationTest"
+    "\\PresentationTest",
+    "\\PresentationTests"
   ],
-  "SelectedNode": "\\PresentationTest\\packages.config",
+  "SelectedNode": "\\PresentationTests\\PresentationTest.cs",
   "PreviewInSolutionExplorer": false
 }
