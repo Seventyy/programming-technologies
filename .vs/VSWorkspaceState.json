@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Shop",
-    "\\Shop\\Logic"
+    "\\PresentationLayer",
+    "\\PresentationLayer\\Model",
+    "\\PresentationLayer\\View",
+    "\\PresentationTest"
   ],
-  "SelectedNode": "\\Shop\\Task1.sln",
+  "SelectedNode": "\\PresentationTest\\packages.config",
   "PreviewInSolutionExplorer": false
 }
