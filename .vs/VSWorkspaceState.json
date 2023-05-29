@@ -1,12 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\PresentationLayer",
-    "\\PresentationLayer\\Model",
-    "\\PresentationLayer\\View",
-    "\\PresentationTest",
-    "\\PresentationTests"
+    ""
   ],
-  "SelectedNode": "\\PresentationTests\\PresentationTest.cs",
+  "SelectedNode": "\\Task2.sln",
   "PreviewInSolutionExplorer": false
 }
