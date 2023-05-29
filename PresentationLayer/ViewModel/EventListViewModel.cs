@@ -1,4 +1,5 @@
-﻿using PresentationLayer.Model;
+﻿using Data.abstraction.interfaces;
+using PresentationLayer.Model;
 using Service;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,8 @@ namespace PresentationLayer.ViewModel
 
             AddCommand = new RelayCommandViewModel(e => { AddEvent(); });
             DeleteCommand = new RelayCommandViewModel(e => { DeleteEvent(); });
+
+            GetEvents();
         }
 
         public ICommand AddCommand { get; }
@@ -62,6 +65,15 @@ namespace PresentationLayer.ViewModel
             };
             OnPropertyChanged(nameof(Events));
             new_event.Delete();
+        }
+
+        void GetEvents()
+        {
+            List<IEvent> c = serviceApi.getEvents();
+            foreach (var item in c)
+            {
+                events.Add(new EventModel(serviceApi, item.EventId, item.CustomerId, item.ProductId, item.EventOccurenceTime));
+            }
         }
     }
 }

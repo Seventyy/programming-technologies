@@ -53,6 +53,8 @@ namespace PresentationLayer.ViewModel
             AddCommand = new RelayCommandViewModel(e => { AddCustomer(); });
             EditCommand = new RelayCommandViewModel(e => { EditCustomer(); });
             DeleteCommand = new RelayCommandViewModel(e => { DeleteCustomer(); });
+
+            GetCustomers();
         }
 
         public ICommand AddCommand { get; }
@@ -94,6 +96,15 @@ namespace PresentationLayer.ViewModel
             };
             OnPropertyChanged(nameof(Customers));
             new_customer.Delete();
+        }
+
+        void GetCustomers()
+        {
+            List<ICustomer> c = serviceApi.getCustomers();
+            foreach (var item in c)
+            {
+                customers.Add(new CustomerModel(serviceApi, item.CustomerId, item.First_Name, item.Last_Name));
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using PresentationLayer.Model;
+﻿using Data.abstraction.interfaces;
+using PresentationLayer.Model;
 using Service;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,8 @@ namespace PresentationLayer.ViewModel
             AddCommand = new RelayCommandViewModel(e => { AddProduct(); });
             EditCommand = new RelayCommandViewModel(e => { EditProduct(); });
             DeleteCommand = new RelayCommandViewModel(e => { DeleteProduct(); });
+
+            GetProducts();
         }
 
         public ICommand AddCommand { get; }
@@ -80,5 +83,15 @@ namespace PresentationLayer.ViewModel
             OnPropertyChanged(nameof(Products));
             new_product.Delete();
         }
+
+        void GetProducts()
+        {
+            List<IProduct> c = serviceApi.getProducts();
+            foreach (var item in c)
+            {
+                products.Add(new ProductModel(serviceApi, item.ProductId, item.Name, item.Price, item.State));
+            }
+        }
+
     }
 }
