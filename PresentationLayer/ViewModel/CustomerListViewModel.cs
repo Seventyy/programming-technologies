@@ -45,9 +45,9 @@ namespace PresentationLayer.ViewModel
             set { customers = value; OnPropertyChanged(nameof(Customers)); }
         }
 
-        public CustomerListViewModel(IServiceApi serviceApi = default(DataService))
+        public CustomerListViewModel()
         {
-            this.serviceApi = serviceApi;
+            serviceApi = new DataService();
             customers = new List<ICustomerModel>();
 
             AddCommand = new RelayCommandViewModel(e => { AddCustomer(); });
