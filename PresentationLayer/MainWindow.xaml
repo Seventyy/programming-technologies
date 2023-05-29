@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:PresentationLayer"
         xmlns:view="clr-namespace:PresentationLayer.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="900">
     <Grid>
-        <view:CustomerListView Margin="0,56,0,317"/>
-        <view:CustomerListView Margin="0,0,0,378"/>
+        <view:CustomerListView Margin="0,0,600,0"/>
+        <view:ProductListView Margin="300,0,300,0"/>
+        <view:EventListView Margin="600,0,0,0"/>
     </Grid>
 </Window>

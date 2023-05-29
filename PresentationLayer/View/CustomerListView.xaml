@@ -4,11 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PresentationLayer.View"
+             xmlns:viewmodel="clr-namespace:PresentationLayer.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="300">
+
+    <UserControl.DataContext>
+        <viewmodel:CustomerListViewModel/>
+    </UserControl.DataContext>
+
     <Grid>
-        <Label Content="Testing..." Margin="10,10,10,10"/>
-        <TextBox TextWrapping="Wrap" Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,250,5"/>
-        <Button Content="Add" Margin="555,5,5,5" Command="{Binding AddCommand, Mode=OneWay}"/>
+        <TextBox Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
+        <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="20" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
+        <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="20" Margin="10,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
+
+        <Button Content="Add" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" Width="100" Command="{Binding AddCommand, Mode=OneWay}"/>
+        <Button Content="Edit" HorizontalAlignment="Left" Margin="190,35,0,0" VerticalAlignment="Top" Width="100" Command="{Binding EditCommand, Mode=OneWay}"/>
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="190,60,0,0" VerticalAlignment="Top" Width="100" Command="{Binding DeleteCommand, Mode=OneWay}"/>
+
+        <ListView ItemsSource="{Binding Customers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,85,10,10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding CustomerId}" Header="Id" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding First_Name}" Header="First Name" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Last_Name}" Header="Last Name" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </UserControl>
