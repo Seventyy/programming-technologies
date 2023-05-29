@@ -59,10 +59,6 @@ namespace ServiceTests
             throw new NotImplementedException();
         }
 
-        public List<String> getCustomersAll()
-        {
-            return stringsC;
-        }
 
         public int getEventCustomerId(int id)
         {

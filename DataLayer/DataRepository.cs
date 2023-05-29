@@ -308,16 +308,49 @@ namespace Data
 
         public List<ICustomer> getCustomers()
         {
+            List <DataLayer.Customer> customes = new List<DataLayer.Customer>();
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Customer> customers = from cus in db.Customers
+                                                           select cus;
+
+                foreach (DataLayer.Customer customer in customers)
+                {
+                    customes.Add(customer);
+                }
+            }
             return Customers;
         }
         
         public List<IProduct> getProducts()
         {
+            List<DataLayer.Product> cata = new List<DataLayer.Product> ();
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Product> products = from prod in db.Products
+                                                         select prod;
+
+                foreach (DataLayer.Product prod in products)
+                {
+                    cata.Add (prod);
+                }
+            }
             return Catalog;
         }
 
         public List<IEvent> getEvents()
         {
+            List<DataLayer.Event> evens = new List<DataLayer.Event>();
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                IQueryable<DataLayer.Event> events = from eve in db.Events
+                                                     select eve;
+
+                foreach (DataLayer.Event eve in events)
+                {
+                    evens.Add(eve);   
+                }
+            }
             return Events;
         }
     }
