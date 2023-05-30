@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\PresentationLayer",
-    "\\PresentationLayer\\Model",
-    "\\PresentationLayer\\View",
-    "\\PresentationTest"
+    ""
   ],
-  "SelectedNode": "\\PresentationTest\\packages.config",
+  "SelectedNode": "\\README",
   "PreviewInSolutionExplorer": false
 }
