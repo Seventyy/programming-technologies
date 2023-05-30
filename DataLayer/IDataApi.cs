@@ -10,9 +10,9 @@ namespace Data.abstraction.interfaces;
 public interface IDataApi
 {
 
-    public static IDataApi createDataRepository()
+    public static IDataApi createDataRepository(string? connectionString = null)
     {
-        return new Data.DataRepository();
+        return new Data.DataRepository(connectionString);
     }
 
 
@@ -44,6 +44,15 @@ public interface IDataApi
     public int getEventCustomerId(int id);
     public int getEventProductId(int id);
     public DateTime? getEventDate(int id);
+    #endregion
+
+    #region Method Linq for task purposes
+    public double getProductPriceMethod(int id);
+    public String getProductNameMethod(int id);
+
+    public String getCustomerFirstNameMethod(int id);
+    public String getCustomerLastNameMethod(int id);
+
     #endregion
 
     public List<ICustomer> getCustomers();

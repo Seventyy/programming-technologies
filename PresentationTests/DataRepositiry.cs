@@ -178,5 +178,25 @@ namespace PresentationTests
         {
             throw new NotImplementedException();
         }
+
+        public double getProductPriceMethod(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getProductNameMethod(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getCustomerFirstNameMethod(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getCustomerLastNameMethod(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

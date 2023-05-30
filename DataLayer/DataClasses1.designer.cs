@@ -346,7 +346,7 @@ namespace DataLayer
 		
 		private int _ProductId;
 		
-		private System.DateTime _EventOccurenceTime;
+		private System.Nullable<System.DateTime> _EventOccurenceTime;
 		
 		private string _EventType;
 		
@@ -360,7 +360,7 @@ namespace DataLayer
     partial void OnCustomerIdChanged();
     partial void OnProductIdChanging(int value);
     partial void OnProductIdChanged();
-    partial void OnEventOccurenceTimeChanging(System.DateTime value);
+    partial void OnEventOccurenceTimeChanging(System.Nullable<System.DateTime> value);
     partial void OnEventOccurenceTimeChanged();
     partial void OnEventTypeChanging(string value);
     partial void OnEventTypeChanged();
@@ -431,8 +431,8 @@ namespace DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventOccurenceTime", DbType="Date NOT NULL")]
-		public System.DateTime EventOccurenceTime
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventOccurenceTime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EventOccurenceTime
 		{
 			get
 			{

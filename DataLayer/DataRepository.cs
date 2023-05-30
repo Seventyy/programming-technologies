@@ -15,7 +15,7 @@ namespace Data
     public class DataRepository : IDataApi
     {
 
-        private string connection = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\jjani\\source\\repos\\Task2\\DataTest\\Database1.mdf;Integrated Security=True";
+        private string connection;
 
         MapperConfiguration configuration = new MapperConfiguration(cfg =>
         {
@@ -32,13 +32,16 @@ namespace Data
         IMapper mapper;
     
 
-        public DataRepository()
+        public DataRepository(string? connectionString = null)
         {
             Customers = new List<ICustomer>();
             Events = new List<IEvent>();
             Catalog = new List<IProduct>();
             mapper = configuration.CreateMapper();
-     
+            connection = connectionString ?? string.Empty;
+            loadCustomers();
+            loadProducts();
+            loadEvents();
         }
 
         public void addCustomer(int cid, string fn, string ln)
@@ -153,6 +156,16 @@ namespace Data
             return null;
         }
 
+        public string getCustomerFirstNameMethod(int id)
+        {
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                DataLayer.Customer? customer = db.Customers.Where(cus => cus.Id == id).FirstOrDefault();
+                return customer != null ? customer.first_name : "";
+            }
+
+        }
+
 
         public string? getCustomerLastName(int id)
         {
@@ -170,7 +183,15 @@ namespace Data
             return null;
         }
 
-       
+        public string getCustomerLastNameMethod(int id)
+        {
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                DataLayer.Customer? customer = db.Customers.Where(cus => cus.Id == id).FirstOrDefault();
+                return customer != null ? customer.last_name : "";
+            }
+        }
+
         public string? getProductName(int id)
         {
             using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
@@ -187,6 +208,15 @@ namespace Data
             return null;
         }
 
+        public String getProductNameMethod(int id)
+        {
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+                DataLayer.Product? product = db.Products.Where(prod => prod.Id == id).FirstOrDefault();
+                return product != null ? product.Name : "";
+            }
+        }
+
         public double getProductPrice(int id)
         {
             using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
@@ -201,6 +231,15 @@ namespace Data
                 }
             }
             return 0;
+        }
+
+        public double getProductPriceMethod(int id)
+        {
+            using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
+            {
+              DataLayer.Product? product = db.Products.Where(prod => prod.Id == id).FirstOrDefault();
+              return product != null ? product.Price : 0;
+            }
         }
 
 
@@ -308,7 +347,22 @@ namespace Data
 
         public List<ICustomer> getCustomers()
         {
-            List <DataLayer.Customer> customes = new List<DataLayer.Customer>();
+            return Customers;
+        }
+        
+        public List<IProduct> getProducts()
+        {
+            return Catalog;
+        }
+
+        public List<IEvent> getEvents()
+        {
+            return Events;
+        }
+
+        private void loadCustomers()
+        {
+            List<DataLayer.Customer> customes = new List<DataLayer.Customer>();
             using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
             {
                 IQueryable<DataLayer.Customer> customers = from cus in db.Customers
@@ -316,15 +370,15 @@ namespace Data
 
                 foreach (DataLayer.Customer customer in customers)
                 {
-                    customes.Add(customer);
+                    Customers.Add(new Customer(customer.Id, customer.first_name, customer.last_name));
                 }
             }
-            return Customers;
+
         }
-        
-        public List<IProduct> getProducts()
+
+        public void loadProducts()
         {
-            List<DataLayer.Product> cata = new List<DataLayer.Product> ();
+            List<DataLayer.Product> cata = new List<DataLayer.Product>();
             using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
             {
                 IQueryable<DataLayer.Product> products = from prod in db.Products
@@ -332,13 +386,12 @@ namespace Data
 
                 foreach (DataLayer.Product prod in products)
                 {
-                    cata.Add (prod);
+                    Catalog.Add(new Product(prod.Id, prod.Name, prod.Price, prod.State));
                 }
             }
-            return Catalog;
         }
 
-        public List<IEvent> getEvents()
+        public void loadEvents()
         {
             List<DataLayer.Event> evens = new List<DataLayer.Event>();
             using (DataLayer.DataClasses1DataContext db = new DataLayer.DataClasses1DataContext(connection))
@@ -348,10 +401,13 @@ namespace Data
 
                 foreach (DataLayer.Event eve in events)
                 {
-                    evens.Add(eve);   
+                    if (eve.EventType == "Buy")
+                        Events.Add(new BuyEvent(eve.Id, eve.ProductId, eve.CustomerId, eve.EventType));
+                    else
+                        Events.Add(new ReturnEvent(eve.Id, eve.ProductId, eve.CustomerId, eve.EventType));
                 }
             }
-            return Events;
         }
     }
+
 }
