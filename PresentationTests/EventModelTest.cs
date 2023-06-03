@@ -1,13 +1,15 @@
-﻿using Service;
+﻿using Data.abstraction.interfaces;
+using PresentationLayer.Model;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PresentationLayer.Model
+namespace PresentationTests
 {
-    internal class EventModel : IEventModel
+    internal class EventModelTest : IEventModel
     {
         public int EventId { get; }
         public int CustomerId { get; set; }
@@ -16,7 +18,7 @@ namespace PresentationLayer.Model
 
         IServiceApi ServiceApi;
 
-        public EventModel(IServiceApi ServiceApi, int eid, int cid, int pid, DateTime dt)
+        public EventModelTest(IServiceApi ServiceApi, int eid, int cid, int pid, DateTime dt)
         {
             this.ServiceApi = ServiceApi;
 

@@ -1,14 +1,14 @@
-﻿using Service;
+﻿using PresentationLayer.Model;
+using Service;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PresentationLayer.Model
+namespace PresentationTests
 {
-    internal class ProductModel : IProcuctModel
+    internal class ProductModelTest : IProcuctModel
     {
         public int ProductId { get; }
 
@@ -18,7 +18,7 @@ namespace PresentationLayer.Model
 
         IServiceApi ServiceApi;
 
-        public ProductModel(IServiceApi ServiceApi, int pid, string n, double p, double s)
+        public ProductModelTest(IServiceApi ServiceApi, int pid, string n, double p, double s)
         {
             this.ServiceApi = ServiceApi;
 

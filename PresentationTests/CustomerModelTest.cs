@@ -1,21 +1,21 @@
-﻿using System;
+﻿using PresentationLayer.Model;
+using Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Service;
 
-namespace PresentationLayer.Model
+namespace PresentationTests
 {
-    internal class CustomerModel : ICustomerModel
+    internal class CustomerModelTest : ICustomerModel
     {
         public int CustomerId { get; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         IServiceApi ServiceApi;
 
-        public CustomerModel(IServiceApi ServiceApi, int id, string first_name, string last_name)
+        public CustomerModelTest(IServiceApi ServiceApi, int id, string first_name, string last_name)
         {
             this.ServiceApi = ServiceApi;
 

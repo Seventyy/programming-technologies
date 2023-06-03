@@ -43,6 +43,18 @@ namespace PresentationLayer.ViewModel
             GetProducts();
         }
 
+        public ProductListViewModel(IServiceApi serviceApi)
+        {
+            this.serviceApi = serviceApi;
+            products = new List<IProcuctModel>();
+
+            AddCommand = new RelayCommandViewModel(e => { AddProduct(); });
+            EditCommand = new RelayCommandViewModel(e => { EditProduct(); });
+            DeleteCommand = new RelayCommandViewModel(e => { DeleteProduct(); });
+
+            GetProducts();
+        }
+
         public ICommand AddCommand { get; }
         public ICommand EditCommand { get; }
         public ICommand DeleteCommand { get; }

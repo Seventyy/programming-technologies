@@ -42,6 +42,17 @@ namespace PresentationLayer.ViewModel
             GetEvents();
         }
 
+        public EventListViewModel(IServiceApi serviceApi)
+        {
+            this.serviceApi = serviceApi;
+            events = new List<IEventModel>();
+
+            AddCommand = new RelayCommandViewModel(e => { AddEvent(); });
+            DeleteCommand = new RelayCommandViewModel(e => { DeleteEvent(); });
+
+            GetEvents();
+        }
+
         public ICommand AddCommand { get; }
         public ICommand DeleteCommand { get; }
 

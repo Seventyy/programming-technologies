@@ -8,13 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ServiceLayer\ServiceLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="View\ProductListView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <ProjectReference Include="..\ViewModel\PresentationLayer.csproj" />
   </ItemGroup>
 
 </Project>

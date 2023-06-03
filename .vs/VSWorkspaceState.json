@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\PresentationLayer",
+    "\\PresentationLayer\\View"
   ],
-  "SelectedNode": "\\README",
+  "SelectedNode": "\\PresentationLayer\\View\\ProductListView.xaml",
   "PreviewInSolutionExplorer": false
 }

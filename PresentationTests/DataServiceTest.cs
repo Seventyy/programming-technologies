@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace PresentationTests
 {
-    public class DataService : IServiceApi
+    public class DataServiceTest : IServiceApi
     {
         IDataApi _context { get; set; }
-        public DataService()
+        public DataServiceTest()
         {
             _context = new DataRepository();
         }

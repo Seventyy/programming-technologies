@@ -57,15 +57,15 @@ namespace PresentationTests
 
     internal class DataRepository : IDataApi
     {
-        public List<Customer> Customers;
-        public List<Event> Events;
-        public List<Product> Catalog;
+        public List<ICustomer> Customers;
+        public List<IEvent> Events;
+        public List<IProduct> Catalog;
 
         public DataRepository()
         {
-            Customers = new List<Customer>();
-            Events = new List<Event>();
-            Catalog = new List<Product>();
+            Customers = new List<ICustomer>();
+            Events = new List<IEvent>();
+            Catalog = new List<IProduct>();
         }
 
         public void addCustomer(int cid, string fn, string ln)
@@ -166,17 +166,17 @@ namespace PresentationTests
 
         public List<ICustomer> getCustomers()
         {
-            throw new NotImplementedException();
+            return Customers;
         }
 
         public List<IProduct> getProducts()
         {
-            throw new NotImplementedException();
+            return Catalog;
         }
 
         public List<IEvent> getEvents()
         {
-            throw new NotImplementedException();
+            return Events;
         }
 
         public double getProductPriceMethod(int id)

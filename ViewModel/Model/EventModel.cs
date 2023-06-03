@@ -1,15 +1,13 @@
-﻿using Data.abstraction.interfaces;
-using PresentationLayer.Model;
-using Service;
+﻿using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PresentationTests
+namespace PresentationLayer.Model
 {
-    internal class EventModel : IEventModel
+    public class EventModel : IEventModel
     {
         public int EventId { get; }
         public int CustomerId { get; set; }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PresentationLayer.ViewModel;
+using Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +17,5 @@ namespace PresentationLayer.Model
         void Add();
         void Edit(int cid, string fn, string ln); 
         void Delete();
-    } 
+    }
 }

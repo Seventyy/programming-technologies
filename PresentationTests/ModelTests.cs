@@ -1,12 +1,14 @@
+using PresentationLayer.Model;
+
 namespace PresentationTests
 {
     [TestClass]
-    public class PresentationTest
+    public class ModelTests
     {
         [TestMethod]
         public void CustomerTest()
         {
-            DataService dataService = new DataService();
+            DataServiceTest dataService = new DataServiceTest();
             CustomerModel c1 = new CustomerModel(dataService, 0, "a", "A");
             CustomerModel c2 = new CustomerModel(dataService, 1, "b", "B");
 
@@ -32,7 +34,7 @@ namespace PresentationTests
         [TestMethod]
         public void ProductTest()
         {
-            DataService dataService = new DataService();
+            DataServiceTest dataService = new DataServiceTest();
             ProductModel p1 = new ProductModel(dataService, 0, "A", 10, 100);
             ProductModel p2 = new ProductModel(dataService, 1, "B", 20, 200);
 
@@ -60,7 +62,7 @@ namespace PresentationTests
         [TestMethod]
         public void EventTest()
         {
-            DataService dataService = new DataService();
+            DataServiceTest dataService = new DataServiceTest();
             EventModel c1 = new EventModel(dataService, 0, 10, 100, DateTime.Now);
             EventModel c2 = new EventModel(dataService, 1, 20, 200, DateTime.Now);
 
@@ -97,7 +99,7 @@ namespace PresentationTests
             string[] customer_lastnames = new string[] { RandomString(), RandomString(), RandomString(), RandomString() };
 
 
-            DataService dataService = new DataService();
+            DataServiceTest dataService = new DataServiceTest();
             CustomerModel c1 = new CustomerModel(dataService, 0, customer_names[0], customer_lastnames[0]);
             CustomerModel c2 = new CustomerModel(dataService, 1, customer_names[1], customer_lastnames[1]);
 
@@ -129,7 +131,7 @@ namespace PresentationTests
             double[] product_prices = new double[] { rand.NextDouble(), rand.NextDouble(), rand.NextDouble(), rand.NextDouble() };
             double[] product_quantities = new double[] { rand.NextDouble(), rand.NextDouble(), rand.NextDouble(), rand.NextDouble() };
 
-            DataService dataService = new DataService();
+            DataServiceTest dataService = new DataServiceTest();
             ProductModel p1 = new ProductModel(dataService, 0, product_names[0], product_prices[0], product_quantities[0]);
             ProductModel p2 = new ProductModel(dataService, 1, product_names[1], product_prices[1], product_quantities[1]);
 
@@ -163,7 +165,7 @@ namespace PresentationTests
             int[] product_ids = new int[] { rand.Next(), rand.Next(), rand.Next() };
 
 
-            DataService dataService = new DataService();
+            DataServiceTest dataService = new DataServiceTest();
             EventModel c1 = new EventModel(dataService, 0, customer_ids[0], product_ids[0], DateTime.Now);
             EventModel c2 = new EventModel(dataService, 1, customer_ids[1], product_ids[1], DateTime.Now);
 

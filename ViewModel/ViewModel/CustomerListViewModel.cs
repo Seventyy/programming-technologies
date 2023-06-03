@@ -57,6 +57,18 @@ namespace PresentationLayer.ViewModel
             GetCustomers();
         }
 
+        public CustomerListViewModel(IServiceApi serviceApi)
+        {
+            this.serviceApi = serviceApi;
+            customers = new List<ICustomerModel>();
+
+            AddCommand = new RelayCommandViewModel(e => { AddCustomer(); });
+            EditCommand = new RelayCommandViewModel(e => { EditCustomer(); });
+            DeleteCommand = new RelayCommandViewModel(e => { DeleteCustomer(); });
+
+            GetCustomers();
+        }
+
         public ICommand AddCommand { get; }
         public ICommand EditCommand { get; }
         public ICommand DeleteCommand { get; }
