@@ -13,8 +13,8 @@ namespace DataTest
         {
             string RPath = @"Database1.mdf";
             string RootPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            string _DBPath = Path.Combine(RootPath, RPath);
-            return $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True";
+            string DatabasePath = Path.Combine(RootPath, RPath);
+            return $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DatabasePath};Integrated Security = True;";
         }
 
 
@@ -32,13 +32,15 @@ namespace DataTest
         {
             IDataApi api = IDataApi.createDataRepository(getCtString());
             Assert.AreEqual(api.getProductPrice(2), 100);
+            api.updateProduct(5, "Milk", 5, 5000);
+            Assert.AreEqual(api.getProductPrice(5), 5);
         }
 
         [TestMethod]
         public void TestCount()
         {
             IDataApi api = IDataApi.createDataRepository(getCtString());
-            Assert.AreEqual(api.getProducts().Count(), 3);
+            Assert.AreEqual(api.getProducts().Count(), 7);
             Assert.AreEqual(api.getEvents().Count(), 1);
         }
 
@@ -48,6 +50,7 @@ namespace DataTest
             IDataApi api = IDataApi.createDataRepository(getCtString());
             Assert.AreEqual(api.getProductPriceMethod(2), 100);
             Assert.AreEqual(api.getCustomerFirstNameMethod(2), "John");
+
         }
     }
 }
