@@ -22,7 +22,6 @@ namespace DataTest
         public void TestdGetters()
         {
             IDataApi api = IDataApi.createDataRepository(getCtString());
-         
             Assert.AreEqual("John", api.getCustomerFirstName(1));
             Assert.AreEqual(api.getCustomers().Count(), 3);
 
@@ -40,6 +39,7 @@ namespace DataTest
         {
             IDataApi api = IDataApi.createDataRepository(getCtString());
             Assert.AreEqual(api.getProducts().Count(), 3);
+            Assert.AreEqual(api.getEvents().Count(), 1);
         }
 
         [TestMethod]
