@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PresentationLayer"
              xmlns:view="clr-namespace:PresentationLayer.View"
-             xmlns:viewModels="clr-namespace:PresentationLayer.ViewModel" 
+             xmlns:viewmodel="clr-namespace:PresentationLayer.ViewModel;assembly=PresentationLayer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <DataTemplate DataType="{x:Type viewModels:CustomerListViewModel}">
+        <DataTemplate DataType="{x:Type viewmodel:CustomerListViewModel}">
             <view:CustomerListView/>
         </DataTemplate>
     </Application.Resources>

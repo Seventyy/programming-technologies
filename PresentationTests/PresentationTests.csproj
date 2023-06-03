@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PresentationLayer\PresentationLayer.csproj" />
+    <ProjectReference Include="..\PresentationLayer\View.csproj" />
   </ItemGroup>
 
 </Project>
